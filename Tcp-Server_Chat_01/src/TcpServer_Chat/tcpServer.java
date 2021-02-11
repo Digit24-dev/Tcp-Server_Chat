@@ -62,7 +62,7 @@ class ServerThread extends Thread{
 	private DataOutputStream dos = new DataOutputStream(os);
 	
 	private FileInputStream fin = null;
-	private String file_dir = "C:\\Users\\legoj\\eclipse-workspace\\TcpServer\\";
+	private String file_dir = "C:\\Users\\legoj\\git\\Tcp-Server_Chat\\Tcp-Server_Chat_01\\";
 	byte[] buffer = new byte[1024];
 	int length;
 	
@@ -142,6 +142,18 @@ class ServerThread extends Thread{
 						System.out.println(id + "--> 요청거부 : 파일 존재하지 않음.");
 					}
 				}
+				
+				// ********* 파일 보내기 **********
+				else if(line.contains("/filelist")) {
+					File file = new File(file_dir);
+					String dir_fl = "";
+					for(int i = 0; i < file.list().length; i++) {
+						dir_fl = dir_fl + " " + file.list()[i];
+					}
+					sendCommand("Server", id, dir_fl);
+					System.out.println(id + "--> 파일 리스트 요청");
+				}
+				
 				
 				// ********* 일반 채팅 *********
 				else {
